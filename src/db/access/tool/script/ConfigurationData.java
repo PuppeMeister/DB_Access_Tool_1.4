@@ -11,18 +11,18 @@ package db.access.tool.script;
  */
 public class ConfigurationData {
     
-    private String[] listServer;
-    private String[] listUser;
-    private String ip;
-    private String port;
-    private String user;
-    private String password;
-    private String DB_ADMIN_IP;
-    private String DB_ADMIN_PORT;
-    private String DB_ADMIN_USER;
-    private String DB_ADMIN_PASS;
-    private String DB_ADMIN_DATABASE;
-    private String DB_ADMIN_TABLE;
-    private String[] LIST_ADMIN;
+    public static String[] listServer;
+    public static String[] listUser;
+    public static String ip;
+    public static String port;
+    public static String user;
+    public static String password;
+    public static String DB_ADMIN_IP;
+    public static String DB_ADMIN_PORT;
+    public static String DB_ADMIN_USER;
+    public static String DB_ADMIN_PASS;
+    public static String DB_ADMIN_DATABASE;
+    public static String DB_ADMIN_TABLE;
+    public static String[] LIST_ADMIN;
     
 }
