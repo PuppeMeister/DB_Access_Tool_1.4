@@ -18,11 +18,10 @@ import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /**
  *
  * @author rinnadia
@@ -31,20 +30,23 @@ public class EntryPoint {
     
     private static String configFolder = "./Configuration";
     private static String configFile = "./Configuration/configuration.conf";
+    //public static Logger log = Logger.getLogger(Log4J.class.getName());
+     private static final Logger logger = (Logger) LogManager.getLogger(EntryPoint.class);
     
     public static void main(String[] args){
        
-        System.err.println("Initializing Program");
+        
+        logger.info("Initializing Program");
         boolean checkConfigResult = false;
         checkConfigResult = checkConfigurationFile(checkConfigResult);
         
         if(checkConfigResult == true){
             try {
-                
                 MainGUI objMainGUI = new MainGUI();
                 objMainGUI.setVisible(true);
             } catch (IOException ex) {
-                Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
+                //logger.warn(configFile, ex);
+                //Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
@@ -74,11 +76,11 @@ public class EntryPoint {
         //if directory exists?
         if (!Files.exists(path)) {
             result = false;
-                System.out.println("Configuration file is not found.");
+                logger.warn("Configuration file is not found.");
         }
         else{
             result = true;
-            System.out.println("Configuration file is found.");
+            logger.info("Configuration file is found.");
             
         }
         return result;
@@ -89,14 +91,14 @@ public class EntryPoint {
         Path path = Paths.get(configFolder);
         //if directory exists?
         if (!Files.exists(path)) {
-            System.out.println("Configuration folder is not found.");
+            logger.info("Configuration folder is not found.");
             try {
                 Files.createDirectories(path);
-                System.out.println("Configuration folder is initialized.");
+                logger.info("Configuration folder is initialized.");
             } catch (IOException e) {
                 //fail to create directory
-                System.out.println("Configuration folder initialization is failed.");
-                System.out.println(e);
+                logger.error("Configuration folder initialization is failed.", e);
+                //System.out.println(e);
             }
         }
         
@@ -139,11 +141,11 @@ public class EntryPoint {
                 sbc.write(bb);
                 processResult = true;
             }
-            System.out.println("Configuration file has been created.");
+            logger.info("Configuration file has been created.");
             
         } catch (IOException x) {
-            System.out.println("Configuration file cannot be created.");
-            System.out.println(x);
+            logger.error("Configuration file cannot be created.", x);
+            //System.out.println(x);
             processResult = false;
         }
         return processResult;
